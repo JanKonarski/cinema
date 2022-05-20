@@ -1,0 +1,25 @@
+version: "3.9"
+services:
+  db:
+    image: "mysql:8.0.29"
+    cap_add:
+      - SYS_NICE
+    environment:
+      - MYSQL_DATABASE=cinema
+      - MYSQL_ROOT_PASSWORD=j2@w^LN]?:rK
+  web:
+    image: "php:8.1-apache"
+    depends_on:
+      - db
+    ports:
+      - "9090:80"
+      - "9091:443"
+    volumes:
+      - ./src:/var/www/html
+  webadmin:
+    image: "phpmyadmin:5.2.0-apache"
+    depends_on:
+      - db
+    ports:
+      - "9092:80"
+      - "9093:443"
