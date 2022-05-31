@@ -1,0 +1,9 @@
+table:
+- użytkownicy
+- zakupione bilety
+- tranzakcje (kartą gotówką)
+- seans
+- filmy
+- komentarze i oceny filmów
+- produkty (barek kinowy)
+- zakupy (zakupy dokonany w barku kinowym)

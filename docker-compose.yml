@@ -7,6 +7,9 @@ services:
     environment:
       - MYSQL_DATABASE=cinema
       - MYSQL_ROOT_PASSWORD=j2@w^LN]?:rK
+    volumes:
+      - "./script/schema.sql:/docker-entrypoint-initdb.d/1.sql"
+      - "./script/data.sql:/docker-entrypoint-initdb.d/2.sql"
   web:
     image: "php:8.1-apache"
     depends_on:
@@ -15,7 +18,7 @@ services:
       - "9090:80"
       - "9091:443"
     volumes:
-      - ./src:/var/www/html
+      - ./src:/var/www
   webadmin:
     image: "phpmyadmin:5.2.0-apache"
     depends_on:
