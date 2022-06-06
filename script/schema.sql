@@ -86,10 +86,12 @@ CREATE TABLE goods (
 );
 
 CREATE TABLE purchase (
-    id      VARCHAR(36) NOT NULL                /* GUID */
-,   userID  VARCHAR(36) NOT NULL                /* GUID */
+    id              VARCHAR(36) NOT NULL        /* GUID */
+,   userID          VARCHAR(36) NOT NULL        /* GUID */
+,   transactionID   VARCHAR(36) NOT NULL        /* GUID */
 ,   PRIMARY KEY (id)
-,   FOREIGN KEY (userID)    REFERENCES user(id)
+,   FOREIGN KEY (userID)        REFERENCES user(id)
+,   FOREIGN KEY (transactionID) REFERENCES transaction(id)
 );
 
 CREATE TABLE cart (
