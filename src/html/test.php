@@ -1,6 +1,6 @@
 <?php
 
-print(password_hash('password', PASSWORD_ARGON2ID));
+print(password_hash('123ABC$%^def', PASSWORD_ARGON2ID));
 
 require_once '../components/sql.php';
 
