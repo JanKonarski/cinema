@@ -86,27 +86,33 @@
 
         $('#check').click(function(){
             var list = document.getElementsByClassName('select');
+            var list2 = [];
             var text = '';
             $.each(list, function(index, item){
                 text += item.id + '\n';
+                list2.push(item.id);
             });
             alert(text);
+            alert(JSON.stringify(list2));
         });
 
         $('input#submit').click(function(){
+            var list = [];
+            $.each(document.getElementsByClassName('select'), function(index, item){
+                list.push(item.id);
+            });
+            var request = {'seats': JSON.stringify(list).toString()};
             $.ajax({
-                url: '',
+                url: 'http://0.0.0.0:9090/post.php',
                 type: 'post',
-                dataType: 'json',
-                data: '',
-                success: function(data) {
-
+                data: request,
+                success: function(response) {
+                    log(request);
                 },
                 error: function() {
-
+                    alert('Connection error');
                 }
             });
-            alert();
         });
 	</script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
