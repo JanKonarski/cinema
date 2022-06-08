@@ -1,6 +1,6 @@
 <?php
 
-require_once '../config.php';
+require_once '/var/www/config.php';
 
 class sql
 {
@@ -33,7 +33,7 @@ class sql
 	{
 		if ($this->result = $this->mysqli->query($sql))
 		{
-			if ($this->result->num_rows = 0)
+			if ($this->result->num_rows == 0)
 				return false;
 
 			return $this->result;

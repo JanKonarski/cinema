@@ -103,14 +103,14 @@
             });
             var request = {'seats': JSON.stringify(list).toString()};
             $.ajax({
-                url: 'http://0.0.0.0:9090/post.php',
+                url: 'post/post.php',
                 type: 'post',
                 data: request,
                 success: function(response) {
-                    log(request);
+                    console.log(request);
                 },
                 error: function() {
-                    alert('Connection error');
+                    alert('Error');
                 }
             });
         });
