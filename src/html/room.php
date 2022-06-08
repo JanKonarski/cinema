@@ -103,7 +103,7 @@
             });
             var request = {'seats': JSON.stringify(list).toString()};
             $.ajax({
-                url: 'post/post.php',
+                url: 'room_post.php',
                 type: 'post',
                 data: request,
                 success: function(response) {
