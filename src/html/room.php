@@ -25,7 +25,7 @@
             text-align: center;
             color: white;
             vertical-align: middle;
-            cursor: grab;
+            cursor: pointer;
         }
 
         .free {
@@ -68,6 +68,21 @@
         <input type="button" id="check" value="check"/>
         <input type="submit" id="submit" value="Next"/>
 	</div>
+<?php
+    if (isset($_GET['seance'])) {
+        require_once '../components/sql.php';
+        $sql = new sql();
+        $query = 'SELECT seat FROM ticket WHERE seanceID="' .$_GET['seance']. '"';
+        $response = $sql->execute($query);
+        if ($response != false) {
+            $data = $response->fetch_all()[0];
+            print('<ul>');
+            foreach ($data as $record)
+                print('<li>' .$record. '</li>');
+            print('</ul>');
+        }
+    }
+?>
 	<script>
         $('.seat').click(function(){
             if ($(this).hasClass('occupied')) {
