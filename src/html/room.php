@@ -54,35 +54,40 @@
 		<div class="screen"></div>
 		<table class="seats">
 <?php
-	for ($i=1; $i<11; $i++) {
-		print('<tr>');
-		for ($j=1; $j<9; $j++)
-			print('<td><div class="seat free" id="' .('r'.$i.'c'.$j). '">' .($j). '</div></td>');
-		print('<td><div class="transition"></div></td>');
-		for ($j=1; $j<9; $j++)
-			print('<td><div class="seat free" id="' .('r'.$i.'c'.$j). '">' .(8+$j). '</div></td>');
-		print('</tr>');
-	}
+
+require_once '../components/sql.php';
+$sql = new sql();
+$query = 'SELECT seat FROM ticket WHERE seanceID="' .$_GET['seance']. '"';
+$response = $sql->execute($query);
+if ($response != false)
+    $response = $response->fetch_all()[0];
+$seats = array_fill(0, 10, array_fill(0, 16, 'free'));
+if ($response != false) {
+	foreach ($response as $record) {
+		preg_match_all('(\d{1,2})', $record, $matches);
+		$seats[$matches[0][0]-1][$matches[0][1]-1] = 'occupied';
+    }
+}
+
+for ($i=1; $i<11; $i++) {
+    print('<tr>');
+    for ($j=1; $j<9; $j++) {
+        $type = $seats[$i-1][$j-1];
+	    print('<td><div class="seat ' .$type. '" id="' . ('r' . $i . 'c' . $j) . '">' . ($j) . '</div></td>');
+    }
+    print('<td><div class="transition"></div></td>');
+    for ($j=1; $j<9; $j++) {
+        $type = $seats[$i-1][$j+7];
+        print('<td><div class="seat ' .$type. '" id="' .('r'.$i.'c'.(8+$j)). '">' .(8+$j). '</div></td>');
+    }
+    print('</tr>');
+}
+
 ?>
 		</table>
-        <input type="button" id="check" value="check"/>
+<!--        <input type="button" id="check" value="check"/> -->
         <input type="submit" id="submit" value="Next"/>
 	</div>
-<?php
-    if (isset($_GET['seance'])) {
-        require_once '../components/sql.php';
-        $sql = new sql();
-        $query = 'SELECT seat FROM ticket WHERE seanceID="' .$_GET['seance']. '"';
-        $response = $sql->execute($query);
-        if ($response != false) {
-            $data = $response->fetch_all()[0];
-            print('<ul>');
-            foreach ($data as $record)
-                print('<li>' .$record. '</li>');
-            print('</ul>');
-        }
-    }
-?>
 	<script>
         $('.seat').click(function(){
             if ($(this).hasClass('occupied')) {
@@ -118,11 +123,14 @@
             });
             var request = {'seats': JSON.stringify(list).toString()};
             $.ajax({
-                url: 'room_post.php',
+                url: 'room_post.php?seance=<?php print($_GET['seance']); ?>',
                 type: 'post',
                 data: request,
                 success: function(response) {
-                    console.log(request);
+                    if (JSON.parse(response).status == '1') {
+                        location.href = 'bar.php';
+                    } else
+                        alert('Selected seats error');
                 },
                 error: function() {
                     alert('Error');

@@ -358,10 +358,11 @@ INSERT INTO purchase (id, userID, transactionID) VALUES
 );
 /*--------------------------------------------------------------------------------------------------------------------*/
 /* Cart table */
-INSERT INTO cart (purchaseID, goodID) VALUES
+INSERT INTO cart (purchaseID, goodID, count) VALUES
 (
     '81f2070f-b424-447f-9489-8704bb73701b'
 ,   'f557f454-2b9e-42aa-a0d5-460e3c0116c3'
+,   1
 ),
 (
     '81f2070f-b424-447f-9489-8704bb73701b'

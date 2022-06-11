@@ -97,6 +97,7 @@ CREATE TABLE purchase (
 CREATE TABLE cart (
     purchaseID  VARCHAR(36) NOT NULL            /* GUID */
 ,   goodID      VARCHAR(36) NOT NULL            /* GUID */
+,   count       INTEGER NOT NULL
 ,   FOREIGN KEY (purchaseID)    REFERENCES purchase(id)
 ,   FOREIGN KEY (goodID)        REFERENCES goods(id)
 )

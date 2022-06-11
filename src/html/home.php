@@ -36,7 +36,8 @@ $response = $sql->execute($query);
 $data = $response->fetch_all()[0];
 
 print('<div>Welcome ' .$data[0]. '</div>');
-print('<a href="logout.php">logout</a>');
+print('<a href="logout.php">logout</a><br/>');
+print('<a href="purchase.php">purchases</a>');
 print('<h1>Repertoire</h1>');
 
 $query = 'SELECT id, name, category, description FROM movie;';

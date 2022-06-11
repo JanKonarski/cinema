@@ -33,6 +33,9 @@ class sql
 	{
 		if ($this->result = $this->mysqli->query($sql))
 		{
+			if (is_bool($this->result) and $this->result == 1)
+				return true;
+
 			if ($this->result->num_rows == 0)
 				return false;
 
